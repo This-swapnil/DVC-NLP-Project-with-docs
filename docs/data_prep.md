@@ -1,6 +1,6 @@
 # Data preparation stage
 
-- Convert my data into train and test.tsc in 70:30 ratio
+- Convert my data into train and test.tsv in 70:30 ratio
 ```
 data.xml
     |-train.tsv
