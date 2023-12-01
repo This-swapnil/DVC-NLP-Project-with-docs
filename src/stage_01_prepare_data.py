@@ -7,19 +7,21 @@ from src.utils.common import read_yaml, create_directories
 STAGE = "Prepare_data"
 
 logging.basicConfig(
-    filename=os.path.join("logs","running_logs.log"),
+    filename=os.path.join("logs", "running_logs.log"),
     level=logging.INFO,
     format="[%(asctime)s: %(levelname)s: %(module)s]: %(message)s",
-    filemode="a")
+    filemode="a",
+)
 
-def main(config_path,params_path):
+
+def main(config_path, params_path):
     ## read config files
     config = read_yaml(config_path)
     params = read_yaml(params_path)
     pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     args = argparse.ArgumentParser()
     args.add_argument("--config", "-c", default="configs/config.yaml")
     args.add_argument("--params", "-p", default="params.yaml")
