@@ -1,5 +1,5 @@
 # Project information
-site_name: REPO_NAME_OR_SITE_NAME
+site_name: DVC-NLP-Project-with-docs
 # defeine TOC or order of website-
 nav:
   - Home: index.md
@@ -9,8 +9,8 @@ site_description: >-
   DESCRIPTION
 
 # Repository
-repo_name: This-swapnil/REPO_NAME
-repo_url: https://github.com/This-swapnil/REPO_NAME
+repo_name: This-swapnil/DVC-NLP-Project-with-docs
+repo_url: https://github.com/This-swapnil/DVC-NLP-Project-with-docs
 
 # Configuration
 theme:
