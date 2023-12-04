@@ -1,0 +1,47 @@
+schema: '2.0'
+stages:
+  data_preparation:
+    cmd: python src/stage_01_prepare_data.py
+    deps:
+    - path: data/data.xml
+      hash: md5
+      md5: a304afb96060aad90176268345e10355
+      size: 37891850
+    - path: src/stage_01_prepare_data.py
+      hash: md5
+      md5: 212465522ee4d94aff5bfd2467bf3013
+      size: 2233
+    - path: src/utils
+      hash: md5
+      md5: a10b88610225438ca09acc2a3f987611.dir
+      size: 5684
+      nfiles: 6
+    outs:
+    - path: artifacts/prepared
+      hash: md5
+      md5: dc639257fd7e43c167de7349d66763c4.dir
+      size: 23861349
+      nfiles: 2
+  featurization:
+    cmd: python src/stage_02_featurization.py
+    deps:
+    - path: artifacts/prepared
+      hash: md5
+      md5: dc639257fd7e43c167de7349d66763c4.dir
+      size: 23861349
+      nfiles: 2
+    - path: src/stage_02_featurization.py
+      hash: md5
+      md5: 2ad697966abe6a11f8d134df6b994499
+      size: 3332
+    - path: src/utils
+      hash: md5
+      md5: a10b88610225438ca09acc2a3f987611.dir
+      size: 5684
+      nfiles: 6
+    outs:
+    - path: artifacts/features
+      hash: md5
+      md5: 3a39c11aacf8e86bd001183f75826e56.dir
+      size: 17755400
+      nfiles: 2
