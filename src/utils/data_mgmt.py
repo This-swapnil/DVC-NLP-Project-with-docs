@@ -1,8 +1,12 @@
+from cProfile import label
 import logging
 import random
 import re
 import xml.etree.ElementTree as ET
+import joblib
+from scipy import sparse
 from tqdm import tqdm
+import numpy as np
 
 
 def process_posts(fd_in, fd_out_train, fd_out_test, target_tag, split):
@@ -27,3 +31,15 @@ def process_posts(fd_in, fd_out_train, fd_out_test, target_tag, split):
         except Exception as e:
             msg = f"Skipping the broken line {line_num}: {e}\n"
             logging.exception(msg)
+
+
+def save_matrix(df, text_matrix, out_path):
+    pid_matrix = sparse.csr_matrix(df.pid.astype(np.int64)).T
+    label_matrix = sparse.csr_matrix(df.label.astype(np.int64)).T
+
+    result = sparse.hstack([pid_matrix, label_matrix, text_matrix])
+
+    msg=f"The output matrix saved at {out_path} of shape: {result.shape}"
+
+    logging.info(msg=msg)
+    joblib.dump(result,out_path)

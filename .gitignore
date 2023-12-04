@@ -163,3 +163,6 @@ data/data.xml
 .gitignore
 artifacts/prepared/test.tsv
 artifacts/prepared/train.tsv
+artifacts/features/test.pkl
+artifacts/features/train.pkl
+research_trail_dir/count_vect.py
