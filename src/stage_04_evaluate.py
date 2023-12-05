@@ -42,32 +42,44 @@ def evaluate(config_path, params_path):
     labels = np.squeeze(matrix[:, 1].toarray())
     X = matrix[:, 2:]
 
-    predicted = model.predict(X)
+    prediction_probabilities = model.predict_proba(X)
+    pred = prediction_probabilities[:, 1]
 
     PRC_json_path = config["plots"]["PRC"]
     ROC_json_path = config["plots"]["ROC"]
     scores_json_path = config["metrics"]["SCORES"]
 
-    avg_prec = metrics.average_precision_score(labels, predicted)
-    roc_auc = metrics.roc_auc_score(labels, predicted)
+    avg_prec = metrics.average_precision_score(labels, pred)
+    roc_auc = metrics.roc_auc_score(labels, pred)
+
+    logging.info(f"len of labels: {len(labels)} and predictions: {len(pred)}")
 
     scores = {"avg_prc": avg_prec, "roc_auc": roc_auc}
 
     save_json(scores_json_path, scores)
 
-    precisoin,recall,prc_theshold=metrics.precision_recall_curve(labels,predicted)
+    precisoin, recall, prc_theshold = metrics.precision_recall_curve(labels, pred)
 
-    n_th_point=math.ceil(len(prc_theshold)/1000)
-    prc_points=list(zip(precisoin,recall,prc_theshold))[::n_th_point]
+    n_th_point = math.ceil(len(prc_theshold) / 1000)
+    prc_points = list(zip(precisoin, recall, prc_theshold))[::n_th_point]
 
-    prc_data={'prc':[{'precision':p,'recall':r,'threshold':t} for p,r,t in prc_points]}
-    save_json(PRC_json_path,prc_data)
+    logging.info(f"no of prc points: {len(prc_points)}")
 
-    fpr,tpr,roc_threshold=metrics.roc_curve(labels,predicted)
+    prc_data = {
+        "prc": [{"precision": p, "recall": r, "threshold": t} for p, r, t in prc_points]
+    }
+    save_json(PRC_json_path, prc_data)
 
-    roc_data={"roc":[{"fpr":fp,"tpr":tp,'threshold':t} for fp,tp,t in zip(fpr,tpr,roc_threshold)]}
-    save_json(ROC_json_path,roc_data)
+    fpr, tpr, roc_threshold = metrics.roc_curve(labels, pred)
+    roc_points = zip(fpr, tpr, roc_threshold)
 
+    roc_data = {
+        "roc": [{"fpr": fp, "tpr": tp, "threshold": t} for fp, tp, t in roc_points]
+    }
+
+    logging.info(f"no of roc points: {len(list(roc_points))}")
+
+    save_json(ROC_json_path, roc_data)
 
 
 if __name__ == "__main__":
