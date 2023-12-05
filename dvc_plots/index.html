@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>DVC Plot</title>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.18.2"></script>
+    
+    <style>
+        table {
+            border-spacing: 15px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id = "prc_json">
+        <script type = "text/javascript">
+            var spec = {"$schema": "https://vega.github.io/schema/vega-lite/v5.json", "data": {"values": [{"precision": 0.019560557341907824, "recall": 1.0, "threshold": 0.0, "rev": "workspace"}, {"precision": 0.8, "recall": 0.0547945205479452, "threshold": 1.0, "rev": "workspace"}]}, "title": "prc.json", "width": 300, "height": 300, "params": [{"name": "smooth", "value": 0.001, "bind": {"input": "range", "min": 0.001, "max": 1, "step": 0.001}}], "layer": [{"mark": "line", "encoding": {"x": {"field": "recall", "type": "quantitative", "title": "recall"}, "y": {"field": "precision", "type": "quantitative", "title": "precision", "scale": {"zero": false}}, "color": {"field": "rev", "type": "nominal"}, "tooltip": [{"field": "recall", "title": "recall", "type": "quantitative"}, {"field": "precision", "title": "precision", "type": "quantitative"}]}, "transform": [{"loess": "precision", "on": "recall", "groupby": ["rev", "filename", "field", "filename::field"], "bandwidth": {"signal": "smooth"}}]}, {"mark": {"type": "line", "opacity": 0.2}, "encoding": {"x": {"field": "recall", "type": "quantitative", "title": "recall"}, "y": {"field": "precision", "type": "quantitative", "title": "precision", "scale": {"zero": false}}, "color": {"field": "rev", "type": "nominal"}, "tooltip": [{"field": "recall", "title": "recall", "type": "quantitative"}, {"field": "precision", "title": "precision", "type": "quantitative"}]}}, {"mark": {"type": "circle", "size": 10, "tooltip": {"content": "encoding"}}, "encoding": {"x": {"aggregate": "max", "field": "recall", "type": "quantitative", "title": "recall"}, "y": {"aggregate": {"argmax": "recall"}, "field": "precision", "type": "quantitative", "title": "precision", "scale": {"zero": false}}, "color": {"field": "rev", "type": "nominal"}}}]};
+            vegaEmbed('#prc_json', spec);
+        </script>
+    </div>
+    
+
+    <div id = "roc_json">
+        <script type = "text/javascript">
+            var spec = {"$schema": "https://vega.github.io/schema/vega-lite/v5.json", "data": {"values": [{"fpr": 0.0, "tpr": 0.0, "threshold": Infinity, "rev": "workspace"}, {"fpr": 0.00027329871549603714, "tpr": 0.0547945205479452, "threshold": 1.0, "rev": "workspace"}, {"fpr": 1.0, "tpr": 1.0, "threshold": 0.0, "rev": "workspace"}]}, "title": "roc.json", "width": 300, "height": 300, "params": [{"name": "smooth", "value": 0.001, "bind": {"input": "range", "min": 0.001, "max": 1, "step": 0.001}}], "layer": [{"mark": "line", "encoding": {"x": {"field": "fpr", "type": "quantitative", "title": "fpr"}, "y": {"field": "tpr", "type": "quantitative", "title": "tpr", "scale": {"zero": false}}, "color": {"field": "rev", "type": "nominal"}, "tooltip": [{"field": "fpr", "title": "fpr", "type": "quantitative"}, {"field": "tpr", "title": "tpr", "type": "quantitative"}]}, "transform": [{"loess": "tpr", "on": "fpr", "groupby": ["rev", "filename", "field", "filename::field"], "bandwidth": {"signal": "smooth"}}]}, {"mark": {"type": "line", "opacity": 0.2}, "encoding": {"x": {"field": "fpr", "type": "quantitative", "title": "fpr"}, "y": {"field": "tpr", "type": "quantitative", "title": "tpr", "scale": {"zero": false}}, "color": {"field": "rev", "type": "nominal"}, "tooltip": [{"field": "fpr", "title": "fpr", "type": "quantitative"}, {"field": "tpr", "title": "tpr", "type": "quantitative"}]}}, {"mark": {"type": "circle", "size": 10, "tooltip": {"content": "encoding"}}, "encoding": {"x": {"aggregate": "max", "field": "fpr", "type": "quantitative", "title": "fpr"}, "y": {"aggregate": {"argmax": "fpr"}, "field": "tpr", "type": "quantitative", "title": "tpr", "scale": {"zero": false}}, "color": {"field": "rev", "type": "nominal"}}}]};
+            vegaEmbed('#roc_json', spec);
+        </script>
+    </div>
+    
+</body>
+</html>
